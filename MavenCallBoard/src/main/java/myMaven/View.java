@@ -10,29 +10,30 @@ public class View {
 	static AdvertList adv;
 	static DataSource xml;
 	static DataSource json;
-	
+
 	static String xmlFile = "dataCopy.xml";
-	static String jsonFile= "data.json";
+	static String jsonFile = "data.json";
 
 	public static void main(String arg[]) {
 		adv = AdvertList.getInstance();
 		View v = new View();
 		xml = new XMLSource();
-		//json = new JSONSource();
+		// json = new JSONSource();
 		xml.readFromFile(xmlFile);
-		//json.readFromFile(jsonFile);
+		// json.readFromFile(jsonFile);
 		v.Start();
 		while (true) {
-			while (!v.eventer(v.getMode()));
+			while (!v.eventer(v.getMode()))
+				;
 		}
 	}
 
 	public View() {
 		setUserName();
 	}
-	
+
 	public View(String forTest) {
-		
+
 	}
 
 	@SuppressWarnings("resource")
@@ -55,7 +56,7 @@ public class View {
 	public String getUserName() {
 		return userName;
 	}
-	
+
 	/**
 	 * Show available modes for getting started
 	 * */
@@ -74,6 +75,8 @@ public class View {
 				.println(">Для просмотра текущего пользователя введите  user");
 		System.out
 				.println(">Для просмотра рубрик                         sections");
+		System.out
+				.println(">Для сохранения изменений                     save");
 	}
 
 	@SuppressWarnings("resource")
@@ -93,11 +96,13 @@ public class View {
 		String editMode = new Scanner(System.in).nextLine();
 		return editMode;
 	}
-	
+
 	/**
-	 * Carry out certain actions depending on chosen mode. 
-	 * Displays the message about absence notexisting mode.
-	 * @param mode name of mode
+	 * Carry out certain actions depending on chosen mode. Displays the message
+	 * about absence notexisting mode.
+	 * 
+	 * @param mode
+	 *            name of mode
 	 * @return true or false
 	 * */
 
@@ -133,7 +138,7 @@ public class View {
 			break;
 		case "save":
 			xml.writeToFile(xmlFile);
-			//json.writeToFile("data.json");
+			// json.writeToFile("data.json");
 			System.out.println("Изменения сохранены");
 			break;
 		default:
@@ -147,10 +152,12 @@ public class View {
 	public void newMode() {
 		adv.addNewAdvertisement(enterSection(), enterHeader(), enterText());
 	}
-	
+
 	/**
-	 * Determines the existing of entered section for new advertisement in available sections list.
-	 * If find returns its name, if not - displays the message about absence.
+	 * Determines the existing of entered section for new advertisement in
+	 * available sections list. If find returns its name, if not - displays the
+	 * message about absence.
+	 * 
 	 * @return name of section
 	 * */
 
@@ -174,11 +181,12 @@ public class View {
 		}
 		return section;
 	}
-	
+
 	/**
-	 * Validate the entered header.
-	 * If header is correct returns it, if not - displays the message about discrepancy. 
-	 * End when correct header will be entered.
+	 * Validate the entered header. If header is correct returns it, if not -
+	 * displays the message about discrepancy. End when correct header will be
+	 * entered.
+	 * 
 	 * @return header
 	 * */
 
@@ -199,9 +207,10 @@ public class View {
 	}
 
 	/**
-	 * Validate the entered text.
-	 * If text is correct returns it, if not - displays the message about discrepancy. 
-	 * End when correct text will be entered.
+	 * Validate the entered text. If text is correct returns it, if not -
+	 * displays the message about discrepancy. End when correct text will be
+	 * entered.
+	 * 
 	 * @return text
 	 * */
 	@SuppressWarnings("resource")
@@ -361,48 +370,48 @@ public class View {
 			}
 		}
 	}
-	
+
 	public String showMyAdverts() {
 		String output = "";
 		for (int sectionIndex = 0; sectionIndex < AdvertList.getSectionsCount(); sectionIndex++) {
 			for (int indexAdv = 0; indexAdv < adv.listOfSections[sectionIndex].listOfAds
 					.size(); indexAdv++) {
 				if (getUserName().equals(
-						adv.listOfSections[sectionIndex].listOfAds.get(indexAdv)
-								.getAuthorsName())) {
-					Integer id = adv.listOfSections[sectionIndex].listOfAds.get(
-							indexAdv).getId();
-					long pubDate = adv.listOfSections[sectionIndex].listOfAds.get(
-							indexAdv).getPublicationDate();
-					String section = adv.listOfSections[sectionIndex].listOfAds.get(
-							indexAdv).getSection();
-					String header = adv.listOfSections[sectionIndex].listOfAds.get(
-							indexAdv).getHeader();
-					String text = adv.listOfSections[sectionIndex].listOfAds.get(
-							indexAdv).getText();
-					output = output + "Ид.номер" + id
-							+ "\nДата публикации: " + adv.convertDate(pubDate)
-							+ "\nРубрика: " + section + "\n" + header + "\n"
-							+ text + "\n-------------\n";
+						adv.listOfSections[sectionIndex].listOfAds
+								.get(indexAdv).getAuthorsName())) {
+					Integer id = adv.listOfSections[sectionIndex].listOfAds
+							.get(indexAdv).getId();
+					long pubDate = adv.listOfSections[sectionIndex].listOfAds
+							.get(indexAdv).getPublicationDate();
+					String section = adv.listOfSections[sectionIndex].listOfAds
+							.get(indexAdv).getSection();
+					String header = adv.listOfSections[sectionIndex].listOfAds
+							.get(indexAdv).getHeader();
+					String text = adv.listOfSections[sectionIndex].listOfAds
+							.get(indexAdv).getText();
+					output = output + "Ид.номер" + id + "\nДата публикации: "
+							+ adv.convertDate(pubDate) + "\nРубрика: "
+							+ section + "\n" + header + "\n" + text
+							+ "\n-------------\n";
 				}
 			}
 		}
 		return output;
 	}
-	
+
 	public String showAdvertsOfAuthor(String authorName) {
 		String output = "Объявления, опубликованные " + authorName + "\n";
 		for (int indexCat = 0; indexCat < AdvertList.getSectionsCount(); indexCat++) {
 			for (int indexAdv = 0; indexAdv < adv.listOfSections[indexCat].listOfAds
 					.size(); indexAdv++) {
-				if (authorName.equals(adv.listOfSections[indexCat].listOfAds.get(
-						indexAdv).getAuthorsName())) {
+				if (authorName.equals(adv.listOfSections[indexCat].listOfAds
+						.get(indexAdv).getAuthorsName())) {
 					Integer id = adv.listOfSections[indexCat].listOfAds.get(
 							indexAdv).getId();
 					long pubDate = adv.listOfSections[indexCat].listOfAds.get(
 							indexAdv).getPublicationDate();
-					String section = adv.listOfSections[indexCat].listOfAds.get(
-							indexAdv).getSection();
+					String section = adv.listOfSections[indexCat].listOfAds
+							.get(indexAdv).getSection();
 					String header = adv.listOfSections[indexCat].listOfAds.get(
 							indexAdv).getHeader();
 					String text = adv.listOfSections[indexCat].listOfAds.get(
@@ -416,21 +425,21 @@ public class View {
 		}
 		return output;
 	}
-	
+
 	public String showAdvert(Integer id) {
 		String output = "";
 		for (int indexCat = 0; indexCat < AdvertList.getSectionsCount(); indexCat++) {
 			for (int indexAdv = 0; indexAdv < adv.listOfSections[indexCat].listOfAds
 					.size(); indexAdv++) {
-				if (id.equals(adv.listOfSections[indexCat].listOfAds
-						.get(indexAdv).getId())) {
+				if (id.equals(adv.listOfSections[indexCat].listOfAds.get(
+						indexAdv).getId())) {
 					id = adv.listOfSections[indexCat].listOfAds.get(indexAdv)
 							.getId();
 
 					long pubDate = adv.listOfSections[indexCat].listOfAds.get(
 							indexAdv).getPublicationDate();
-					String section = adv.listOfSections[indexCat].listOfAds.get(
-							indexAdv).getSection();
+					String section = adv.listOfSections[indexCat].listOfAds
+							.get(indexAdv).getSection();
 					String header = adv.listOfSections[indexCat].listOfAds.get(
 							indexAdv).getHeader();
 					String text = adv.listOfSections[indexCat].listOfAds.get(
@@ -448,7 +457,7 @@ public class View {
 		return output;
 
 	}
-	
+
 	public String showAdvertsInCategory(String category) {
 		String output = "";
 		for (int indexCat = 0; indexCat < AdvertList.getSectionsCount(); indexCat++) {
@@ -465,10 +474,9 @@ public class View {
 							indexAdv).getHeader();
 					String text = adv.listOfSections[indexCat].listOfAds.get(
 							indexAdv).getText();
-					output = output + "Ид.номер " + id
-							+ "\nАвтор: " + name + "\nДата публикации: "
-							+ adv.convertDate(pubDate) + "\n" + header + "\n"
-							+ text + "\n-------------\n";
+					output = output + "Ид.номер " + id + "\nАвтор: " + name
+							+ "\nДата публикации: " + adv.convertDate(pubDate)
+							+ "\n" + header + "\n" + text + "\n-------------\n";
 				}
 			}
 		}
