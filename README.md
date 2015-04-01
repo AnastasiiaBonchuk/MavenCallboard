@@ -1,8 +1,8 @@
 # MavenCallboard
 This project is the implementation of the callboard which allows to add the advertisements to different sections, 
-view and edit them, delete owns etc.
-To getting start you must to indroduce yourself entering your username. Then the program suggests you to chose certain mode. 
-Writing the correct mode, some actions will be executed.
+view and edit them, delete ones etc.
+To get startes you must to indroduce yourself entering your username. Then the program suggests you to chose a certain mode. 
+If you write the correct mode, some actions will be executed.
 There are these modes:
 
     rename           - change user;
@@ -17,4 +17,4 @@ There are these modes:
     sections         - shows available sections;
     save             - saves all changes to xml- or json-file
 
-For saving all changes you have to enter save at the end of work.
+To save all changes you have to enter "save" at the end of work.
